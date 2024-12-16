@@ -10,8 +10,8 @@ function App() {
   const containerBoxes = useRef(null);
   const video = useRef<HTMLElement>(null);
   const showVideoMouse = useRef(null);
-  const widthRow = Math.ceil(innerWidth) / 100;
-  const heightCol = Math.ceil(innerHeight) / 100;
+  // const widthRow = Math.ceil(innerWidth) / 100;
+  // const heightCol = Math.ceil(innerHeight) / 100;
 
   useGSAP(() => {
     const tl = gsap.timeline({ repeat: -1, yoyo: true, delay: 0.8 });
