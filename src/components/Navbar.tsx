@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 const Navbar = () => {
   const menuRef = useRef(null);
   const backgroundMenu = useRef(null);
-  const videoRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLElement>(null);
   const showVideoMouse = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,7 +14,7 @@ const Navbar = () => {
     () => {
       const tl = gsap.timeline();
 
-      const videoElement = videoRef.current
+      const videoElement = videoRef.current;
       const mouseElement = showVideoMouse.current;
 
       const handleMouseEnter = () => {
@@ -32,17 +32,17 @@ const Navbar = () => {
         });
       };
 
-      const handleMouseMove = (e) => {
+      const handleMouseMove = (e: MouseEvent) => {
         const rect = videoElement?.getBoundingClientRect();
         gsap.to(mouseElement, {
-          top: e.clientY - rect?.top - 10,
-          left: e.clientX - rect?.left - 10,
+          top: e.clientY - rect!.top - 10,
+          left: e.clientX - rect!.left - 10,
           duration: 0.2, // Short duration for smooth following
           ease: "none",
         });
       };
 
-      const handleMouseActive = (e) => {
+      const handleMouseActive = () => {
         gsap.to(mouseElement, {
           scale: 2,
         });
@@ -183,7 +183,10 @@ const Navbar = () => {
         </div>
 
         {/* Video Section */}
-        <div ref={videoRef} className="   space-y-2   md:w-1/2">
+        <div
+          ref={videoRef as React.RefObject<HTMLDivElement>}
+          className="   space-y-2   md:w-1/2"
+        >
           <div
             ref={showVideoMouse}
             className="fixed opacity-0 scale-0  z-[1000] bg-gradient-to-tl  from-pink-400 to-pink-300 size-14 rounded-full font-mono text-[12px]  shadow-lg shadow-pink-500 flex items-center justify-center scale-y-75"

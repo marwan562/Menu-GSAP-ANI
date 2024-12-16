@@ -48,17 +48,17 @@ function App() {
       });
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e:MouseEvent) => {
       const rect = videoElement?.getBoundingClientRect();
       gsap.to(mouseElement, {
-        top: e.clientY - rect?.top - 50,
-        left: e.clientX - rect?.left - 50,
+        top: e.clientY - rect!.top - 50,
+        left: e.clientX - rect!.left - 50,
         duration: 0.2, // Short duration for smooth following
         ease: "none",
       });
     };
 
-    const handleMouseActive = (e) => {
+    const handleMouseActive = () => {
       gsap.to(mouseElement, {
         scale: 2,
       });
