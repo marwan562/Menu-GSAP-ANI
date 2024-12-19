@@ -1,134 +1,148 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Navbar from "./components/Navbar";
+import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
-  const containerBoxes = useRef(null);
-  const video = useRef<HTMLElement>(null);
-  const showVideoMouse = useRef(null);
-  // const widthRow = Math.ceil(innerWidth) / 100;
-  // const heightCol = Math.ceil(innerHeight) / 100;
+import { useRef } from "react";
+import Responsive from "./components/Responsive.tsx/Responsive";
 
-  useGSAP(() => {
-    const tl = gsap.timeline({ repeat: -1, yoyo: true, delay: 0.8 });
-    gsap.to(".box", {
-      scrollTrigger: {
-        trigger: ".box",
-        start: "50% 90%",
-      },
-      stagger: {
-        each: 0.02,
-        from: "start",
-      },
-      ease: "power3.in",
-      y: 10,
-      opacity: 0,
-      scale: 0,
-    });
+// const Nested = () => {
+//   const container = useRef(null);
 
-    const videoElement = video.current;
-    const mouseElement = showVideoMouse.current;
+//   useGSAP(
+//     () => {
+//       gsap.to(".box", {
+//         rotate: 360,
+//         duration: 3,
+//         yoyo: true,
+//         repeat: -1,
+//         ease: "back.out",
+//       });
+//     },
+//     { scope: container }
+//   );
 
-    const handleMouseEnter = () => {
-      tl.to(mouseElement, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power3.out",
-      });
-      tl.to(mouseElement, {
-        opacity: 0.7,
+//   return (
+//     <div
+//       ref={container}
+//       className=" p-6 border border-white rounded-md space-y-5"
+//     >
+//       <h2 className=" text-white underline text-center mb-2">
+//         Child-Component
+//       </h2>
+//       <div className="box bg-gradient  ">Selector</div>
+//       <div className="circle bg-circle">Ref</div>
+//     </div>
+//   );
+// };
 
-        duration: 0.3,
-        ease: "power3.out",
-      });
-    };
+const App = () => {
+  // media query sizes page
+  // const { media: isMobile } = window.matchMedia("(min-width: 501px)");
+  // const { media: isDesktop } = window.matchMedia("(max-width: 499px)");
 
-    const handleMouseMove = (e:MouseEvent) => {
-      const rect = videoElement?.getBoundingClientRect();
-      gsap.to(mouseElement, {
-        top: e.clientY - rect!.top - 50,
-        left: e.clientX - rect!.left - 50,
-        duration: 0.2, // Short duration for smooth following
-        ease: "none",
-      });
-    };
+  // const container = useRef(null);
+  // const mm = gsap.matchMedia();
 
-    const handleMouseActive = () => {
-      gsap.to(mouseElement, {
-        scale: 2,
-      });
-    };
+  // useGSAP(
+  //   () => {
+  //     mm.add(
+  //       {
+  //         isMobile,
+  //         isDesktop,
+  //       },
+  //       (context) => {
+  //         let { isDesktop } = context.conditions;
+  //         const tl = gsap.timeline({
+  //           scrollTrigger: {
+  //             trigger: ".scroll",
+  //             start: isDesktop ? "top top" : "center bottom",
+  //             end: isDesktop ? "bottom center" : "center 29%",
+  //             markers: true,
+  //             scrub: 5,
+  //           },
+  //         });
 
-    const handleMouseLeave = () => {
-      gsap.to(mouseElement, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power3.in",
-      });
-    };
+  //         tl.from(".right", {
+  //           opacity: 0,
+  //           ease: "power3.in",
+  //           y: isDesktop ? -50 : -500,
+  //           translateX: isDesktop ? -50 : -400,
+  //           scale: isDesktop ? 1.5 : 1,
+  //           stagger: {
+  //             each: 0.2,
+  //             from: "start",
+  //           },
+  //         })
+  //           .from(".left", {
+  //             opacity: 0,
+  //             y: -500,
+  //             ease: "power3.in",
+  //             translateX: isDesktop ? 50 : 400,
+  //             stagger: {
+  //               each: 0.2,
+  //               from: "start",
+  //             },
+  //             scale: isDesktop ? 1.5 : 1,
+  //           })
+  //           .to(".right", {
+  //             rotate: 360,
+  //             y: -20,
+  //             scale: 1.2,
+  //             stagger: {
+  //               each: 0.1,
+  //               ease: "back.out",
+  //             },
+  //           })
+  //           .to(".left", {
+  //             rotate: 360,
+  //             y: -20,
+  //             scale: 1.2,
+  //             stagger: {
+  //               each: 0.1,
+  //               ease: "back.out",
+  //             },
+  //           });
+  //       }
+  //     );
 
-    videoElement?.addEventListener("mouseenter", handleMouseEnter);
-    videoElement?.addEventListener("mousemove", handleMouseMove);
-    videoElement?.addEventListener("mouseleave", handleMouseLeave);
-    videoElement?.addEventListener("click", handleMouseActive);
+  //     return () => {
+  //       mm.revert();
+  //     };
+  //   },
+  //   { scope: container }
+  // );
 
-    gsap.from(video.current, {
-      duration: 1,
-      opacity: 0,
-      y: 100,
-      scrollTrigger: {
-        scrub: true,
-        trigger: ".box",
-        start: "50% 90%",
-      },
-    });
-  });
   return (
-    <div className=" overflow-hidden">
-      <Navbar />
-      <main className="min-h-screen w-full  bg-gradient-to-b from-pink-400 to-pink-300 overflow-x-hidden">
-        <section className="h-screen flex items-center justify-center">
-          page1
-        </section>
-        <section
-          ref={video}
-          className="h-screen  w-screen cursor-none  overflow-hidden relative"
-        >
-          <div
-            ref={showVideoMouse}
-            className="fixed  bg-gradient-to-tl scale-0 opacity-0 from-pink-400 to-pink-300 size-14 rounded-full font-mono text-[12px]  shadow-lg shadow-pink-500 flex items-center justify-center scale-y-75"
-          >
-            VISIT
-          </div>
-          <div>
-            <div
-              ref={containerBoxes}
-              className="absolute top-1 gap-2 z-20 flex  justify-center items-center  flex-wrap"
-            >
-              {Array.from({ length: 112 }, (_, index) => (
-                <div
-                  key={index}
-                  className="box bg-pink-300 opacity-75 blur-lg rounded-md shadow-2xl shadow-black  size-20"
-                ></div>
-              ))}
-            </div>
-            <video className="w-full h-full object-cover" loop autoPlay muted>
-              <source src="/videos/video.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </section>
-        <section className="h-screen flex items-center justify-center">
-          page3
-        </section>
-      </main>
-    </div>
+    <Responsive/>
+    // <div
+    //   ref={container}
+    //   className=" w-full min-h-screen overflow-hidden  bg-black flex flex-col justify-around items-center"
+    // >
+    //   {/* <Nested />
+    //   <div className="box bg-gradient ">Selector</div>
+    //   <div className="bg-circle">Ref No Leaking</div> */}
+    //   <div
+    //     // onClick={startClick}
+    //     className="bg-cyan-300 px-2 py-1 rounded-md  font-semibold cursor-pointer"
+    //   >
+    //     Start Circles
+    //   </div>
+    //   <div className="h-[200vh] scroll flex flex-col  md:flex-row justify-around  items-center gap-2">
+    //     {Array(6)
+    //       .fill(0)
+    //       .map((_, i) => (
+    //         <div
+    //           key={i}
+    //           className={`circle ${i > 2 ? "left" : "right"} bg-circle`}
+    //         >
+    //           {++i}
+    //         </div>
+    //       ))}
+    //   </div>
+    // </div>
   );
-}
+};
 
 export default App;

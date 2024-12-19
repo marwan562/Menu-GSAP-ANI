@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .bg-gradient {
+       @apply size-[80px] flex items-center justify-center font-bold text-lg rounded-md bg-gradient-to-t from-green-500 to-green-300
+    }
+    .bg-circle {
+        @apply size-[80px] flex items-center justify-center font-bold text-lg rounded-full bg-gradient-to-t from-cyan-500 to-cyan-300
+    }
+}

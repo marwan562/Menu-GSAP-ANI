@@ -74,7 +74,9 @@ const Navbar = () => {
           .from(".controls", {
             y: 20,
             stagger: {
-              each: 0.3,
+              each: 0.4,
+              from: "start",
+              amount: 2.5,
             },
             duration: 0.8,
             opacity: 0,
@@ -112,6 +114,7 @@ const Navbar = () => {
       } else {
         // GSAP animation for closing the menu
         gsap.to(menuRef.current, {
+          delay: 1,
           y: "-100%",
           opacity: 0,
           duration: 0.5,
@@ -122,6 +125,10 @@ const Navbar = () => {
         gsap.to(".square", {
           opacity: 0,
           scale: 0.5,
+          stagger: {
+            amount: 1,
+            from: "random",
+          },
           duration: 0.4,
           ease: "power1.inOut",
         });
@@ -199,7 +206,7 @@ const Navbar = () => {
             <span className=" text-sm  shrink-0">INSPIRE WEB</span>
           </h2>
           <video
-            className="video cursor-pointer rounded-md aspect-auto object-cover"
+            className="video cursor-pointer  rounded-md aspect-auto object-cover"
             loop
             autoPlay
             muted
